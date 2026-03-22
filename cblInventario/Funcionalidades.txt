@@ -1,0 +1,43 @@
+FUNCIONALIDADES DEL SISTEMA DE INVENTARIO (COBOL)
+
+    GESTIÓN DE ARCHIVOS (ENVIRONMENT & DATA):
+
+        Almacenamiento Indexado: El programa utiliza un archivo llamado "MATERIA.DAT". Al ser indexado, permite encontrar cualquier material por su ID al instante sin tener que leer todo el archivo.
+
+        Estructura del Registro: Cada material guarda cuatro datos clave: Identificador único (5 dígitos), Nombre (20 caracteres), Stock actual (6 dígitos) y Stock mínimo de seguridad (4 dígitos).
+
+    CONTROL DE ARRANQUE (MAIN-LOGIC):
+
+        Auto-detección de Archivo: Al iniciar, el programa comprueba si el archivo de datos existe. Si es la primera vez que se ejecuta (Error 35), crea el archivo automáticamente.
+
+        Precarga de Datos: Si el archivo es nuevo, el sistema ejecuta una carga inicial de materiales (Hierro, Cemento, Madera) para que el usuario no empiece con la lista vacía.
+
+    MENÚ PRINCIPAL:
+
+        Bucle de Operación: Mantiene el programa abierto en un ciclo infinito hasta que el usuario elige la opción "5" para salir.
+
+        Selector de Acciones: Evalúa la entrada del usuario y redirige el flujo a la subrutina específica (Alta, Modificación, Gasto o Listado).
+
+    OPERACIONES DE REGISTRO (ALTA Y MODIF):
+
+        Alta de Materiales: Permite introducir materiales nuevos. Si el ID ya existe, el sistema impide el duplicado para no corromper la base de datos.
+
+        Modificación de Datos: Permite buscar un material por ID y "resetear" o corregir su cantidad de stock manualmente.
+
+    LÓGICA DE CONSUMO (GASTAR-MATERIAL):
+
+        Validación de Existencias: Antes de restar material, el programa comprueba si hay suficiente cantidad. Si intentas gastar más de lo que tienes, lanza un error y cancela la operación.
+
+        Alerta de Consumo Crítico: Si después de realizar un gasto el stock se queda en 5 unidades o menos, el programa lanza un aviso visual inmediato de "STOCK CRÍTICO".
+
+    SISTEMA DE MONITOREO (LISTAR-ALERTAS):
+
+        Recorrido Secuencial: Escanea todo el inventario de principio a fin y lo muestra en una tabla formateada.
+
+        Prioridad de Alertas: Clasifica cada material en tres estados:
+
+            CRÍTICO: Cuando quedan 5 unidades o menos (Prioridad máxima).
+
+            BAJO: Cuando el stock es menor al mínimo definido para ese material.
+
+            OK: Cuando el stock es suficiente.
